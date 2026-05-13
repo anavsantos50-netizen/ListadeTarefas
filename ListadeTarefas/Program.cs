@@ -1,4 +1,4 @@
-using ListadeTarefas.Data;
+using listadeTarefas.Data;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 

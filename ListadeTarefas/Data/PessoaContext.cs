@@ -1,7 +1,7 @@
-﻿using ListadeTarefas.Models;
+﻿using listadeTarefas.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ListadeTarefas.Data
+namespace listadeTarefas.Data
 {
     public class PessoaContext : DbContext
 

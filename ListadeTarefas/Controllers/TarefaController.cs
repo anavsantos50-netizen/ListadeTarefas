@@ -1,7 +1,8 @@
-﻿using ListadeTarefas.Data;
-using ListadeTarefas.Models;
+﻿using listadeTarefas.Data;
+using listadeTarefas.Models;
 using Microsoft.AspNetCore.Mvc;
-namespace ListadeTarefas.Controllers
+using System.Collections.Generic;
+namespace listadeTarefas.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -43,12 +44,29 @@ namespace ListadeTarefas.Controllers
         
     
         [HttpGet("{id}")]
-        public IActionResult ConsultarPessoaId(int id)
+        public IActionResult ConsultarTarefa(int id)
         {
-            var tarefaDoBanco = _context.Tarefas.Where(t => t.Id.Equals(id)).ToList();
-            if (!tarefaDoBanco.Any())
-                return NotFound("Não encontrada");
-            return Ok(tarefaDoBanco);
+            var pessoaLogada = HttpContext.Session.GetString("IdLogado");
+            if (pessoaLogada == null)
+            {
+                return Unauthorized("Faça login antes!");
+            }
+            var idPessoaLogada = Request.Cookies["IdLogado"];
+            if (idPessoaLogada != null)
+            {
+                var listadeTarefas = from u in _context.Pessoas
+                                join t in _context.Tarefas
+                                on u.Id equals t.IdPessoas
+                                where u.Id == int.Parse(idPessoaLogada)
+                                select new
+                                {
+                                    Usuarios = u.Nome, u.Email,
+                                    Tarefas = t.Statuss,
+                                    t.Descricao
+
+                                };
+                return Ok(listadeTarefas.ToList());
+            }
         }
         [HttpPost("Cadastrar")]
         public IActionResult CriarTarefas(Tarefa tarefa)
@@ -68,5 +86,6 @@ namespace ListadeTarefas.Controllers
             _context.SaveChanges();
             return Created("Teste", tarefa);
         }
+
     }
 }

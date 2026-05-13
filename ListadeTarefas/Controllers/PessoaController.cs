@@ -1,7 +1,7 @@
-﻿using ListadeTarefas.Data;
-using ListadeTarefas.Models;
+﻿using listadeTarefas.Data;
+using listadeTarefas.Models;
 using Microsoft.AspNetCore.Mvc;
-namespace ListadeTarefas.Controllers
+namespace listadeTarefas.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -79,5 +79,15 @@ namespace ListadeTarefas.Controllers
                 return NotFound("Não encontrada");
             return Ok("Vou consultar uma pessoa.");
         }
+        [HttpGet("logout")]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            Response.Cookies.Delete("IdLogado");
+            Response.Cookies.Delete(".AspNetCore.Session");
+            return Ok("Logout realizado com sucesso");
+
+        }
+
     }
 }

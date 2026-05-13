@@ -1,4 +1,4 @@
-﻿namespace ListadeTarefas.Models
+﻿namespace listadeTarefas.Models
 {
     public class Pessoa
     {
