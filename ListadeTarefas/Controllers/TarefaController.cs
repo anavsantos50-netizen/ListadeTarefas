@@ -67,6 +67,7 @@ namespace listadeTarefas.Controllers
                                 };
                 return Ok(listadeTarefas.ToList());
             }
+            return BadRequest();
         }
         [HttpPost("Cadastrar")]
         public IActionResult CriarTarefas(Tarefa tarefa)

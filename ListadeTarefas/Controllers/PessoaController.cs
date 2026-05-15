@@ -59,12 +59,14 @@ namespace listadeTarefas.Controllers
                 return Unauthorized("Email ou senha incorreta.");
 
             HttpContext.Session.SetString("email", dadosLogin.Email);
+
             Response.Cookies.Append("Idusado", loginU[0].Id.ToString(),
              new CookieOptions
              {
                  Expires = DateTime.Now.AddMinutes(38),
                  Secure = true,
-                 HttpOnly = true
+                 HttpOnly = true,
+                 SameSite = SameSiteMode.None
              
              });
             return Ok("Login realizado com sucesso.");
